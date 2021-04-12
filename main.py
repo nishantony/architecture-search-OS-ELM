@@ -157,7 +157,12 @@ def main():
         os.makedirs(directory_path)
     mutate_log_path = 'EA_log/mute_log_%s_%s_%s_%s_%s_%s.csv' % (
         subdataset, sequence_length, method, epochs, pop_size, n_generations)
-    mutate_log_col = ['idx', 'params_1', 'params_2', 'fitness', 'gen']
+    if method == 'non':
+        mutate_log_col = ['idx', 'params_1', 'params_2', 'fitness', 'gen']
+    elif method == 'sfa':
+        mutate_log_col = ['idx', 'params_1', 'params_2', 'params_3', 'params_4', 'fitness', 'gen']
+    elif method == 'pca':
+        mutate_log_col = ['idx', 'params_1', 'params_2', 'params_3', 'fitness', 'gen']
     mutate_log_df = pd.DataFrame(columns=mutate_log_col, index=None)
     mutate_log_df.to_csv(mutate_log_path, index=False)
 

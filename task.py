@@ -26,7 +26,7 @@ class Task:
 
 class SimpleNeuroEvolutionTask(Task):
     '''
-    TODO: Consider hyperparameters of ELM instead of the number of neurons in hidden layers of MLPs. 
+    TODO: Consider hyperparameters of ELM instead of the number of neurons in hidden layers of MLPs.
     Class for EA Task
     '''
     def __init__(self, dp, sequence_length, method, sensor_drop,
