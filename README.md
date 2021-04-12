@@ -37,7 +37,7 @@ python3 main.py -i dataset -l sequence_legnth --method dim_reduction --pop popul
 ```
 
 &ndash;  i : input subdataset (1 for FD001... 4 for FD004) <br/>
-&ndash;  l : sequence length of time series for each rp <br/>
+&ndash;  l : sequence length of time series <br/>
 --method : default='non', help='method for dim.reduction methods 'non','sfa' or 'pca'' <br/>
 --epochs : default=1000, help='number epochs for network training' <br/>
 --batch : default=700, help='batch size of BPTT training' <br/>
