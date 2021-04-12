@@ -67,6 +67,8 @@ Sliced time series with fixed length (so called sequence) right before the engin
 EA log  <br/>
 ![](/figures/ea_log.png)
 
+
+
 Plot of training and validation loss of the discovered network 
 ![](/figures/loss.png)
 
