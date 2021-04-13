@@ -1,8 +1,8 @@
 #/usr/bin/python3
 """
-This file contains implementations of evolutionary algorithms to evolve neural networks in the context of predictive mainteinance.
-Author: Leonardo Lucio Custode
-Date: 17/09/2020
+
+Author:
+Date:
 """
 import random
 import pathos

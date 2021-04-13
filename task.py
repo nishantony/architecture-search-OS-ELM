@@ -53,20 +53,20 @@ class SimpleNeuroEvolutionTask(Task):
         if self.method == 'non':
             bounds = [
                 (10, 100),
-                (10, 100),
+                (10, 50),
             ]
         elif self.method == 'sfa':
             bounds = [
                 (10, 100),
                 (2, 26),
                 (10, 100),
-                (10, 100),
+                (10, 50),
             ]
         elif self.method == 'pca':
             bounds = [
                 (10, 100),
                 (10, 100),
-                (10, 100),
+                (10, 50),
             ]
         return bounds
 
@@ -86,6 +86,7 @@ class SimpleNeuroEvolutionTask(Task):
 
 
         if self.method == 'non':
+            print ("genotype[0]: %s, genotype[1]: %s " %(genotype[0], genotype[1]))
             mlps_net = network_fit(train_samples, label_array_train, test_samples, label_array_test,
                                    self.model_path,
                                    n_hidden1=genotype[0],

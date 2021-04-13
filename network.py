@@ -50,7 +50,7 @@ def gen_net(vec_len, num_hidden1, num_hidden2 ):
     :param num_hidden2:
     :return:
     '''
-
+    print ("num_hidden1: %s, num_hidden2: %s " %(num_hidden1, num_hidden2))
     model = Sequential()
     model.add(Dense(num_hidden1, activation='relu', input_shape=(vec_len,)))
     model.add(Dense(num_hidden2, activation='relu'))
