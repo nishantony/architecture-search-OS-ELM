@@ -54,7 +54,8 @@ For example,
 python3 main.py -i 1 -l 30 --method pca --epochs 300 --pop 20 --gen 20
 ```
 
-After running the code, you will get the results of the discovered NN architecture in RMSE & Score on test data
+After running the code, all EA related log are saved into a file in EA_log folder, and  <br/>
+you will get the results of the discovered NN architecture in RMSE & Score on test data
  
 
 ## Results
