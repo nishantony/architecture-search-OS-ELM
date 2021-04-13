@@ -1,8 +1,7 @@
 #!/bin/python3
 """
 This file contains the implementation of a Task, used to load the data and compute the fitness of an individual
-Author: Leonardo Lucio Custode
-Date: 17/09/2020
+
 """
 import pandas as pd
 from abc import abstractmethod
