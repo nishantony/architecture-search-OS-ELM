@@ -44,6 +44,12 @@ python3 main.py -i dataset -l sequence_legnth --method dim_reduction --pop popul
 --pop : default=50, help='popluation size for EA' <br/>
 --gen : default=50, help='max generations for EA' <br/>
 
+Genotype for each method.
+- non: [n_hidden1, n_hidden2]
+- pca: [n_components, n_hidden1, n_hidden2]
+- sfa: [n_components, n_bins, n_hidden1, n_hidden2]
+
+
 You can check all the other arguments and their details by
 ```bash
 python3 main.py -h
@@ -57,10 +63,6 @@ python3 main.py -i 1 -l 30 --method pca --epochs 300 --pop 20 --gen 20
 After running the code, all EA related log are saved into a file in EA_log folder, and  <br/>
 you will get the results of the discovered NN architecture in RMSE & Score on test data. <br/>
 
-Genotype for each method.
-- non: [n_hidden1, n_hidden2]
-- pca: [n_components, n_hidden1, n_hidden2]
-- sfa: [n_components, n_bins, n_hidden1, n_hidden2]
 
 
 
