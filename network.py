@@ -36,7 +36,7 @@ from tensorflow.keras.layers import BatchNormalization, Activation, LSTM, TimeDi
 from tensorflow.keras.layers import Conv1D
 from tensorflow.keras.layers import MaxPooling1D
 from tensorflow.keras.layers import concatenate
-from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
+from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint, ReduceLROnPlateau
 
 np.random.seed(0)
 tf.random.set_seed(0)
@@ -51,11 +51,15 @@ def gen_net(vec_len, num_hidden1, num_hidden2 ):
     :return:
     '''
     print ("num_hidden1: %s, num_hidden2: %s " %(num_hidden1, num_hidden2))
-    model = Sequential()
-    model.add(Dense(num_hidden1, activation='relu', input_shape=(vec_len,)))
+    
+    model.add(Dense(input_shape=(vec_len,), activation='relu',input_shape=(vec_len,)))
+    model.add(BatchNormalization())
+    model.add(Dense(num_hidden1, activation='relu'))
+    model.add(Dropout(0.3))
+    model.add(Dense(1024, activation='relu')) #a higher fixed value to increase the space to accomodate any complex connection 
+    model.add(Dropout(0.5))
     model.add(Dense(num_hidden2, activation='relu'))
     model.add(Dense(1))
-
     return model
 
 
@@ -109,7 +113,7 @@ class network_fit(object):
         history = self.mlps.fit(self.train_samples, self.label_array_train, epochs=epochs, batch_size=batch_size,
                                 validation_split=0.2, verbose=0,
                                 callbacks=[
-                               EarlyStopping(monitor='val_root_mean_squared_error', min_delta=0, patience=50, verbose=0, mode='min'),
+                               ReduceLROnPlateau(monitor='val_root_mean_squared_error', min_delta=0, patience=5, verbose=0, mode='min'),
                                ModelCheckpoint(self.model_path, monitor='val_root_mean_squared_error', save_best_only=True, mode='min',
                                                verbose=0)])
 
@@ -173,7 +177,7 @@ class network_fit(object):
         history = self.mlps.fit(self.train_samples, self.label_array_train, epochs=epochs, batch_size=batch_size,
                                 validation_split=0.2, verbose=2,
                                 callbacks=[
-                               EarlyStopping(monitor='val_loss', min_delta=0, patience=50, verbose=2, mode='min'),
+                               ReduceLROnPlateau(monitor='val_loss', factor=0.2, min_delta=0, patience=3, verbose=2, mode='min', min_lr=0.001),
                                ModelCheckpoint(self.model_path, monitor='val_root_mean_squared_error', save_best_only=True, mode='min',
                                                verbose=2)])
 
