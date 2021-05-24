@@ -31,6 +31,7 @@ from math import sqrt
 
 from input_creator import input_gen
 from network import network_fit
+from nas import nas_fit
 
 from task import SimpleNeuroEvolutionTask
 from ea import GeneticAlgorithm
@@ -261,15 +262,23 @@ def main():
 
         mlps_net = network_fit(train_samples, label_array_train, test_samples, label_array_test,
                                model_path = model_path, n_hidden1=hof[0][1], n_hidden2=hof[0][2], verbose=verbose)
+    
+    elif method == 'nas':
+        a,b = implement_nas(train_samples, label_array_train, test_samples, label_array_test, verbose=verbose)
 
 
+    if method != 'nas':
+        rms, score  = mlps_net.test_net(epochs=epochs, batch_size= batch, lr= 1e-05, plotting=True)
+        
+        print(subdataset + " test RMSE: ", rms)
+        print(subdataset + " test Score: ", score)
+        
+    else:
+        mae, acc = a, b
 
-
-    rms, score  = mlps_net.test_net(epochs=epochs, batch_size= batch, lr= 1e-05, plotting=True)
-
-
-    print(subdataset + " test RMSE: ", rms)
-    print(subdataset + " test Score: ", score)
+        print(subdataset + " test MAE: ", mae)
+        print(subdataset + " test Accuracy: ", acc)
+    
 
 
 
