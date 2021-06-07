@@ -22,6 +22,7 @@ pip3 install -r requirements.txt
 -scikit-learn <br/>
 -tensorflow-gpu <br/>
 -pathos <br/>
+-autokeras <br/>
 
 ## Descriptions
 - main.py: launcher for the experiments.
