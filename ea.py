@@ -15,6 +15,7 @@ import os
 import pandas as pd
 import copy
 
+import wandb
 # os.remove("logbook.pkl")
 
 
@@ -168,7 +169,7 @@ def eaSimple(population, toolbox, cxpb, mutpb, ngen, stats=None,
     logbook.record(gen=0, nevals=len(invalid_ind), **record)
     if verbose:
         print(logbook.stream)
-
+    wandb.init(project='architectural-search-os-elm', entity='nisha')
     # Begin the generational process
     for gen in range(1, ngen + 1):
         # Select the next generation individuals
@@ -228,7 +229,8 @@ def eaSimple(population, toolbox, cxpb, mutpb, ngen, stats=None,
         min_value = min(temp_list)
         avg_value = 0 if len(temp_list) == 0 else sum(temp_list) / len(temp_list)
         print ("min: %s, max:%s, avg:%s"  %(min_value, max_value, avg_value))
-
+        wandb.log({"generation": gen, "avg_fitness": avg_value})
+        # wandb.log({})
 
 
         logbook.record(gen=gen, nevals=len(invalid_ind), **record)

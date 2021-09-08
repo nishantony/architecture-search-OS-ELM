@@ -38,6 +38,8 @@ from tensorflow.keras.layers import MaxPooling1D
 from tensorflow.keras.layers import concatenate
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint, ReduceLROnPlateau
 
+import wandb
+
 np.random.seed(0)
 tf.random.set_seed(0)
 
@@ -97,6 +99,7 @@ class network_fit(object):
         :param lr:
         :return:
         '''
+        wandb.init(project='architectural-search-os-elm', entity='nisha')
         print("Initializing network...")
         start_itr = time.time()
         # compile the model
@@ -141,7 +144,8 @@ class network_fit(object):
 
         print("training network is successfully completed, time: ", end_itr - start_itr)
         print("fitness: ", fitness_net[0])
-
+        wandb.log({"fitness": fitness_net[0], 'time_consumed': end_itr - start_itr})
+        # wandb.log({})
         return fitness_net
 
 
