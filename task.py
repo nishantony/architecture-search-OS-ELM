@@ -41,7 +41,7 @@ class SimpleNeuroEvolutionTask(Task):
 
 
     def get_n_parameters(self):
-        if self.method == 'non':
+        if self.method == 'non' or self.method == 'nas':
             return 2
         elif self.method == 'sfa':
             return 4
@@ -49,7 +49,7 @@ class SimpleNeuroEvolutionTask(Task):
             return 3
 
     def get_parameters_bounds(self):
-        if self.method == 'non':
+        if self.method == 'non' or self.method == 'nas':
             bounds = [
                 (10, 100),
                 (10, 50),
@@ -75,8 +75,8 @@ class SimpleNeuroEvolutionTask(Task):
         :param genotype:
         :return:
         '''
-        # print ("genotype", genotype)
-        # print ("len(genotype)", len(genotype))
+        print ("genotype", genotype)
+        print ("len(genotype)", len(genotype))
 
         """ Creates a new instance of the training-validation task and computes the fitness of the current individual """
         data_class = input_gen(data_path_list=self.dp, sequence_length=self.sequence_length,
@@ -84,7 +84,7 @@ class SimpleNeuroEvolutionTask(Task):
         train_samples, label_array_train, test_samples, label_array_test = data_class.concat_vec()
 
 
-        if self.method == 'non':
+        if self.method == 'non' or 'nas':
             print ("genotype[0]: %s, genotype[1]: %s " %(genotype[0], genotype[1]))
             mlps_net = network_fit(train_samples, label_array_train, test_samples, label_array_test,
                                    self.model_path,

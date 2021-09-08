@@ -24,7 +24,7 @@ from sklearn.metrics import mean_squared_error
 from math import sqrt
 # import keras
 import tensorflow as tf
-print(tf.__version__)
+# print(tf.__version__)
 
 # import keras.backend as K
 import tensorflow.keras.backend as K
@@ -51,8 +51,8 @@ def gen_net(vec_len, num_hidden1, num_hidden2 ):
     :return:
     '''
     print ("num_hidden1: %s, num_hidden2: %s " %(num_hidden1, num_hidden2))
-    
-    model.add(Dense(input_shape=(vec_len,), activation='relu',input_shape=(vec_len,)))
+    model = Sequential()
+    model.add(Dense(num_hidden1, activation='relu', input_shape=(vec_len,)))
     model.add(BatchNormalization())
     model.add(Dense(num_hidden1, activation='relu'))
     model.add(Dropout(0.3))

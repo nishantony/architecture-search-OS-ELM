@@ -36,6 +36,8 @@ from nas import nas_fit
 from task import SimpleNeuroEvolutionTask
 from ea import GeneticAlgorithm
 
+from autokeras import StructuredDataRegressor
+
 # Ignore tf err log
 pd.options.mode.chained_assignment = None  # default='warn'
 tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
@@ -164,6 +166,8 @@ def main():
         mutate_log_col = ['idx', 'params_1', 'params_2', 'params_3', 'params_4', 'fitness', 'gen']
     elif method == 'pca':
         mutate_log_col = ['idx', 'params_1', 'params_2', 'params_3', 'fitness', 'gen']
+    elif method == 'nas':
+        mutate_log_col = ['idx', 'params_1', 'params_2', 'fitness', 'gen']
     mutate_log_df = pd.DataFrame(columns=mutate_log_col, index=None)
     mutate_log_df.to_csv(mutate_log_path, index=False)
 
@@ -227,6 +231,33 @@ def main():
     end = time.time()
     print("EA time: ", end - start)
 
+    def implement_nas(train_samples, label_array_train, test_samples, label_array_test, verbose, max_trials):
+        '''
+        train the network
+        test the network
+        predict and evaluate
+        :return:
+        '''
+        print("Initializing network...")
+        start_itr = time.time()
+        search = StructuredDataRegressor(max_trials=max_trials, loss='mean_absolute_error') #number of trial and errors allowed
+        search.fit(x=train_samples, y=label_array_train, verbose=verbose) #fitting the model
+        
+        mae, acc = search.evaluate(test_samples, label_array_test, verbose=verbose)
+        rms = sklearn.metrics.mean_squared_error(test_samples, label_array_test, squared=False)
+        yhat = search.predict(test_samples)
+        model1 = search.export_model()
+        # model1.summary()
+        model1.save('model1.tf') #saving the model
+        end_itr = time.time()
+
+        
+
+        print("training network is successfully completed, time: ", end_itr - start_itr)
+        #print("Accuracy of the model is: ", acc)
+        #return yhat , model1
+        return mae , acc
+
 
 
     """ Creates a new instance of the training-validation task and computes the fitness of the current individual """
@@ -264,7 +295,7 @@ def main():
                                model_path = model_path, n_hidden1=hof[0][1], n_hidden2=hof[0][2], verbose=verbose)
     
     elif method == 'nas':
-        a,b = implement_nas(train_samples, label_array_train, test_samples, label_array_test, verbose=verbose)
+        a,b = implement_nas(train_samples, label_array_train, test_samples, label_array_test, verbose=verbose, max_trials=5)
 
 
     if method != 'nas':

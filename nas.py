@@ -73,7 +73,7 @@ class nas_fit(object):
         :return:
         '''
         print("Initializing network...")
-        
+        start_itr = time.time()
         search = StructuredDataRegressor(max_trials=self.max_trials, loss='mean_absolute_error') #number of trial and errors allowed
         search.fit(x=self.train_samples, y=self.label_array_train, verbose=self.verbose) #fitting the model
         
